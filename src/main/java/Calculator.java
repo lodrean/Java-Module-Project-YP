@@ -1,7 +1,5 @@
 public class Calculator {
-  double value;
-
-  Calculator(double value) {
-    this.value = value;
+  static double aveSumm (double summ, int countOfPerson){
+    return summ / countOfPerson;
   }
 }

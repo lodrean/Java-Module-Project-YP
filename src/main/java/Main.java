@@ -14,39 +14,32 @@ public class Main {
             personCount = scanner.nextInt();
         }
 
-        String name="";
-        double value;
+
         String listOfGoods="";
         double summOfGoods= 0.00;
         System.out.println("Введите товар, который хотите добавить в счёт");
         while (true){
-            name = scanner.next();
-            if (name.equalsIgnoreCase("завершить")){
+            String input = scanner.next();
+            if (input.equalsIgnoreCase("завершить")){
                 break;
             }
-            listOfGoods+=name + "\n";
-            System.out.println("Введите стоимость доавляемого товара ");
+            Good position = new Good();
+            position.name = input;
+            listOfGoods += position.name + "\n";
+            System.out.println("Введите стоимость добавляемого товара ");
             while (!scanner.hasNextDouble() && scanner.hasNext()) {
                 System.out.println("некорректные данные, введите еще раз сумму. Вы ввели: " + scanner.next());
             }
-            value = scanner.nextDouble();
-
-            if (value < 0){
-                System.out.println("некорректные данные, введите еще раз:");
-                value = scanner.nextDouble();
+            position.value = scanner.nextDouble();
+            while (position.value<0){
+                System.out.println("Введенное значение некорректно, введите неотрицательную стоимость");
+                position.value = scanner.nextDouble();
             }
-            summOfGoods+=value;
-            System.out.println("Товар "+ name + " добавлен. Если хотите прекратить добавление товаров, введите команду \"завершить\". Введите новый товар");
+            summOfGoods+= position.value;
+            System.out.println("Товар "+ position.name + " добавлен. Если хотите прекратить добавление товаров, введите команду \"завершить\". Введите новый товар");
         }
-
-        System.out.println(listOfGoods);
-        System.out.println(summOfGoods);
-        //Good.listOfGoods();
-
-        }
-        //проверяем корректность введенных данных(должно быть > 1)
-        //System.out.println("Добавленные товары:/n" + list + "Сумма, котору должен заплатить каждый
-        // человек:" + summ + formatting.rubles(summ)" );// печатаем итоговый список товаров и
-        // сумму, которую должен заплатить каждый клиент, форматируя рубли
-
+        double aveSumm = Calculator.aveSumm(summOfGoods, personCount);
+        System.out.println("Добавленные товары:\n" + listOfGoods);
+        System.out.println("Сумма на каждого человека будет равна " + Formatting.round(aveSumm) + " " + Formatting.declination(Math.floor(aveSumm)));
+    }
 }
